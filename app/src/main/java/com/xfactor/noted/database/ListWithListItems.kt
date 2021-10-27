@@ -7,7 +7,7 @@ data class ListWithListItems (
     @Embedded val list: List,
     @Relation(
         parentColumn = "uid",
-        entityColumn = "uid"
+        entityColumn = "listId"
     )
     val listItems: kotlin.collections.List<ListItem>
 )

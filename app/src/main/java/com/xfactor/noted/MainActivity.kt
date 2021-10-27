@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.xfactor.noted.database.AppDatabase
+import com.xfactor.noted.database.ListItem
 import com.xfactor.noted.database.migrations.MIGRATION_1_2
 import kotlin.collections.List
 
@@ -43,16 +44,15 @@ class MainActivity : AppCompatActivity() {
 
         // access the database
         val listDao = db.listDao()
-        val lists : List<com.xfactor.noted.database.List> = listDao.getAll()
-
-        Log.e("lists", lists.toString())
-
-        // Update primary key value by incrementing value of the last item
-        listDao.insertAll(com.xfactor.noted.database.List(uid = lists.last().uid +1, title = "Test List Thre"))
-
-        listDao.delete(lists[0])
+        val listItemDao = db.listItemDao()
 
         Log.e("lists", listDao.getAll().toString())
+        Log.e("listitems", listItemDao.getAll().toString())
+
+        listItemDao.insertAll(ListItem(uid=2, listId = listDao.getAll()[0].uid, value = "Test Item!"))
+
+        Log.e("lists", listDao.getListWithListItems().toString())
+        Log.e("listitems", listItemDao.getAll().toString())
 
     }
 }
